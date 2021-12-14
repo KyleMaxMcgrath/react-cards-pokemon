@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import axios from 'axios';
-import {u4 as uuid} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 const useFlip = (defaultValue) => {
   const [isFacingUp, setIsFacingUp] = useState(defaultValue);
@@ -14,9 +14,9 @@ const useFlip = (defaultValue) => {
 
 const useAxios = (url) => {
   const [array, setArray] = useState([]);
-  const addToArr = async () => {
-    const response = await axios.get(url);
-    setArray(arr => [...arr, { ...response.data, id: uuid() }]);
+  const addToArr = async (arg) => {
+    const response = await axios.get(url+'/'+arg);
+    setArray(arr => [...arr, { ...response.data, id: uuidv4() }]);
   };
   return [array, addToArr];
 };
