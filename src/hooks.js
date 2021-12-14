@@ -18,7 +18,10 @@ const useAxios = (url) => {
     const response = await axios.get(url+'/'+arg);
     setArray(arr => [...arr, { ...response.data, id: uuidv4() }]);
   };
-  return [array, addToArr];
+  const removeAll = () => {
+    setArray(arr => []);
+  }
+  return [array, addToArr, removeAll];
 };
 
 export {useFlip, useAxios};

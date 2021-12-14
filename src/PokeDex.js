@@ -18,13 +18,14 @@ function PokeDex() {
     setPokemon(pokemon => [...pokemon, { ...response.data, id: uuid() }]);
   }; */
 
-  const [pokemon, addPokemon] = useAxios(`https://pokeapi.co/api/v2/pokemon`);
+  const [pokemon, addPokemon, removeAll] = useAxios(`https://pokeapi.co/api/v2/pokemon`);
 
   return (
     <div className="PokeDex">
       <div className="PokeDex-buttons">
         <h3>Please select your pokemon:</h3>
         <PokemonSelect add={addPokemon} />
+        <button onClick={removeAll}>Remove all pokemon</button>
       </div>
       <div className="PokeDex-card-area">
         {pokemon.map(cardData => (
