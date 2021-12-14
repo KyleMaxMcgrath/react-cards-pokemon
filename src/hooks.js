@@ -12,11 +12,11 @@ const useFlip = (defaultValue) => {
 };
 
 
-const useAxios = (url) => {
+const useAxios = (url, formatter) => {
   const [array, setArray] = useState([]);
   const addToArr = async (arg) => {
     const response = await axios.get(url+'/'+arg);
-    setArray(arr => [...arr, { ...response.data, id: uuidv4() }]);
+    setArray(arr => [...arr, {...formatter(response.data), id: uuidv4() }]);
   };
   const removeAll = () => {
     setArray(arr => []);

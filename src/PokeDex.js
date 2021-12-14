@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { v4 as uuid } from "uuid";
-import axios from "axios";
+import React from "react";
 import PokemonSelect from "./PokemonSelect";
 import PokemonCard from "./PokemonCard";
 import "./PokeDex.css";
@@ -18,7 +16,16 @@ function PokeDex() {
     setPokemon(pokemon => [...pokemon, { ...response.data, id: uuid() }]);
   }; */
 
-  const [pokemon, addPokemon, removeAll] = useAxios(`https://pokeapi.co/api/v2/pokemon`);
+  const formatter = (data) => {
+    return {
+      id: data['id'],
+      sprites: data['sprites'],
+      name: data['name'],
+      stats: data['stats']
+    }
+  };
+  const [pokemon, addPokemon, removeAll] = useAxios(`https://pokeapi.co/api/v2/pokemon`, formatter);
+
 
   return (
     <div className="PokeDex">
