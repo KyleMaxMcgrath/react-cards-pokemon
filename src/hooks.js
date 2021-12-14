@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
 
@@ -11,9 +11,21 @@ const useFlip = (defaultValue) => {
   return [isFacingUp, flipCard];
 };
 
+const useLocalStorage = (key, item) => {
+  let initialValue = item;
+  if (localStorage.getItem(key)) {
+    initialValue = JSON.parse(localStorage.getItem(key));
+  }
+  const [state, setState] = useState(initialValue);
 
-const useAxios = (url, formatter) => {
-  const [array, setArray] = useState([]);
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [state, key]);
+  return [state, setState];
+}
+
+const useAxios = (url, formatter, id) => {
+  const [array, setArray] = useLocalStorage(id,[]);
   const addToArr = async (arg) => {
     const response = await axios.get(url+'/'+arg);
     setArray(arr => [...arr, {...formatter(response.data), id: uuidv4() }]);
@@ -24,4 +36,4 @@ const useAxios = (url, formatter) => {
   return [array, addToArr, removeAll];
 };
 
-export {useFlip, useAxios};
+export {useFlip, useAxios, useLocalStorage};

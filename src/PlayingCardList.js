@@ -13,7 +13,7 @@ function CardTable() {
       "cards": data.cards
     }
   );
-  const [cards, addCard, removeAll] = useAxios("https://deckofcardsapi.com/api/deck/new/draw", formatter);
+  const [cards, addCard, removeAll] = useAxios("https://deckofcardsapi.com/api/deck/new/draw", formatter, 'cards');
 
   return (
     <div className="PlayingCardList">
